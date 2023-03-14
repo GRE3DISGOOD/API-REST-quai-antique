@@ -15,11 +15,11 @@ if (isset($_POST['maxPeople'])) {
     // Get maxPeople value from POST data and save it to the database
     $maxPeople = htmlspecialchars($_POST['maxPeople'], ENT_QUOTES, 'UTF-8'); // Sanitize the input using htmlspecialchars
     
-    // Insert maxPeople value into the maxpeople table
+    // Update maxPeople value in the maxpeople table
     require_once 'dbConnect.php';
     
     try {
-        $stmt = $pdo->prepare("INSERT INTO maxpeople (value) VALUES (:maxPeople)");
+        $stmt = $pdo->prepare("UPDATE maxpeople SET value = :maxPeople WHERE id = 1");
         $stmt->bindParam(':maxPeople', $maxPeople);
         $stmt->execute();
         
@@ -33,3 +33,8 @@ if (isset($_POST['maxPeople'])) {
     // Return error message as JSON if maxPeople parameter is not set
     echo json_encode(array('success' => false));
 }
+
+// Close the database connection
+$pdo = null;
+
+?>
