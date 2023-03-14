@@ -24,8 +24,11 @@ try {
     $date = $dateTime->format('Y-m-d');
     // Get today's date
     $today = new DateTime($date);
-    // Get the maximum number of people allowed per reservation from max_people.txt
-    $maxPeople = intval(file_get_contents('max_people.txt'));
+
+    // Get the maximum number of people allowed per reservation from the database
+    $stmt = $pdo->prepare('SELECT maxnumber FROM maxpeople WHERE id = 1');
+    $stmt->execute();
+    $maxPeople = intval($stmt->fetchColumn());
 
     // Check if the date exists in the database
     $stmt = $pdo->prepare('SELECT date FROM calendar WHERE date = :date');
