@@ -12,14 +12,14 @@ $_POST = json_decode($input, true);
 
 // Check if maxPeople parameter is set
 if (isset($_POST['maxPeople'])) {
-    // Get maxPeople value from POST data and save it to the database
+    // Get maxPeople value from POST data
     $maxPeople = htmlspecialchars($_POST['maxPeople'], ENT_QUOTES, 'UTF-8'); // Sanitize the input using htmlspecialchars
     
     // Update maxPeople value in the maxpeople table
     require_once 'dbConnect.php';
     
     try {
-        $stmt = $pdo->prepare("UPDATE maxpeople SET value = :maxPeople WHERE id = 1");
+        $stmt = $pdo->prepare("UPDATE maxpeople SET maxnumber = :maxPeople WHERE id = 1");
         $stmt->bindParam(':maxPeople', $maxPeople);
         $stmt->execute();
         
