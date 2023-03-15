@@ -1,8 +1,8 @@
 <?php
 
 // Set response headers to allow cross-origin requests and specify content type
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Origin: https://quai-antique-ecf.herokuapp.com');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
 
