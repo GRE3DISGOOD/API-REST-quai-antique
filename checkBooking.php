@@ -20,8 +20,9 @@ try {
     $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
     $people = htmlspecialchars($_POST['people'], ENT_QUOTES, 'UTF-8');
     $allergies = htmlspecialchars($_POST['allergies'], ENT_QUOTES, 'UTF-8');
-    $date = htmlspecialchars($_POST['date'], ENT_QUOTES, 'UTF-8');
-    $time = htmlspecialchars($_POST['time'], ENT_QUOTES, 'UTF-8');
+    $date = $_POST['date'];
+    $time = $_POST['time'];
+
 
     // Convert date format from "d/m/Y" to "Y-m-d"
     $dateTime = DateTime::createFromFormat('d/m/Y', $date);
