@@ -1,9 +1,9 @@
 <?php
 
-$host = 'us-cdbr-east-06.cleardb.net';
-$db   = 'heroku_cff952dde46d62c';
-$user = 'b708ae0d334d70';
-$pass = 'b552137f';
+$host = 'eu-cdbr-west-03.cleardb.net';
+$db   = 'heroku_e659a77d3716e15';
+$user = 'b5c7fcf4cec2b4';
+$pass = '44485afb';
 $port = "3306";
 $charset = 'utf8mb4';
 
