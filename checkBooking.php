@@ -23,13 +23,6 @@ try {
     $date = $_POST['date'];
     $time = $_POST['time'];
 
-
-    $date_str = trim($_POST['date']);
-    $date_obj = date_create_from_format('d/m/Y', $date_str);
-    $date_sql = $date_obj->format('Y-m-d');
-    // Get today's date
-    $today = new DateTime($date);
-
     // Get the maximum number of people allowed per reservation from the database
     $stmt = $pdo->prepare('SELECT maxnumber FROM maxpeople WHERE id = 1');
     $stmt->execute();
@@ -42,8 +35,6 @@ try {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     // If the date doesn't exist and is not a Monday or Wednesday, insert it into the database
     if (!$result) {
-        $today = new DateTime($date);
-        if ($today->format('N') !== '1' && $today->format('N') !== '3') {
           $lunchPeople = 0;
           $dinnerPeople = 0;
           $sql = "INSERT INTO calendar (date, lunchPeople, dinnerPeople, maxPeople) VALUES ('$date', '$lunchPeople', '$dinnerPeople', '$maxPeople')";
