@@ -23,6 +23,8 @@ try {
     $date = $_POST['date'];
     $time = $_POST['time'];
 
+    $date = filter_var($date, FILTER_SANITIZE_STRING);
+    $date = date("Y-m-d", strtotime($date));
     // Get today's date
     $today = new DateTime($date);
 
