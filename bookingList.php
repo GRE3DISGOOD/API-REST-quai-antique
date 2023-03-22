@@ -16,11 +16,11 @@ try {
     $_POST = json_decode($input, true);
 
     // Sanitize the input values before binding them to the SQL statement
-    $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
-    $surname = htmlspecialchars($_POST['surname'], ENT_QUOTES, 'UTF-8');
-    $email = htmlspecialchars($_POST['email'], ENT_QUOTES, 'UTF-8');
-    $people = htmlspecialchars($_POST['people'], ENT_QUOTES, 'UTF-8');
-    $allergies = htmlspecialchars($_POST['allergies'], ENT_QUOTES, 'UTF-8');
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $email = $_POST['email'];
+    $people = $_POST['people'];
+    $allergies = $_POST['allergies'];
     $date = $_POST['date'];
     $time = $_POST['time'];
 
