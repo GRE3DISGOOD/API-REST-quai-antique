@@ -23,6 +23,13 @@ try {
     $date = $_POST['date'];
     $time = $_POST['time'];
 
+
+    // Convert date format from "d/m/Y" to "Y-m-d"
+    $date = DateTime::createFromFormat('Y-m-d', $_POST['date']);
+    $date = $dateTime->format('Y-m-d');
+    // Get today's date
+    $today = new DateTime($date);
+
     // Get the maximum number of people allowed per reservation from the database
     $stmt = $pdo->prepare('SELECT maxnumber FROM maxpeople WHERE id = 1');
     $stmt->execute();
