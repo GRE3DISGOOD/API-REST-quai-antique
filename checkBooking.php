@@ -24,9 +24,9 @@ try {
     $time = $_POST['time'];
 
 
-    // Convert date format from "d/m/Y" to "Y-m-d"
-    $date = DateTime::createFromFormat('Y-m-d', $_POST['date']);
-    $date = $dateTime->format('Y-m-d');
+    $date_str = trim($_POST['date']);
+    $date_obj = date_create_from_format('d/m/Y', $date_str);
+    $date_sql = $date_obj->format('Y-m-d');
     // Get today's date
     $today = new DateTime($date);
 
