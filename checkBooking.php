@@ -38,13 +38,10 @@ try {
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     // If the date doesn't exist and is not a Monday or Wednesday, insert it into the database
     if (!$result) {
-        $today = new DateTime($date);
-        if ($today->format('N') !== '1' && $today->format('N') !== '3') {
           $lunchPeople = 0;
           $dinnerPeople = 0;
           $sql = "INSERT INTO calendar (date, lunchPeople, dinnerPeople, maxPeople) VALUES ('$date', '$lunchPeople', '$dinnerPeople', '$maxPeople')";
           $pdo->exec($sql);
-        }
     }
     // If the time is between 12:00 and 14:00, update the number of people for lunch
     if ($time >= '12:00' && $time <= '14:00') {
