@@ -23,8 +23,8 @@ try {
     $date = $_POST['date'];
     $time = $_POST['time'];
 
-    $date = filter_var($date, FILTER_SANITIZE_STRING);
-    $date = DateTime::createFromFormat('d/m/Y', $date)->format('Y-m-d');
+    $timestamp = strtotime($date);
+    $date = date('Y-m-d', $timestamp);
     // Get today's date
     $today = new DateTime($date);
 
