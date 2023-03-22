@@ -11,17 +11,17 @@ try {
     require_once 'dbConnect.php';
 
     // Retrieve POST data and decode it as JSON
-    $input = file_get_contents('php://input');
-    $_POST = json_decode($input, true);
+    $data = json_decode(file_get_contents("php://input"));
 
     // Sanitize input variables to prevent SQL injection
-    $name = isset($_POST['name']) ? $_POST['name'] : null;
-    $surname = isset($_POST['surname']) ? $_POST['surname'] : null;
-    $email = isset($_POST['email']) ? $_POST['email'] : null;
-    $people = isset($_POST['people']) ? $_POST['people'] : null;
-    $allergies = isset($_POST['allergies']) ? $_POST['allergies'] : null;
-    $date = isset($_POST['date']) ? $_POST['date'] : null;
-    $time = isset($_POST['time']) ? $_POST['time'] : null;
+    $name = htmlspecialchars($data->name, ENT_QUOTES, 'UTF-8');
+    $surname = htmlspecialchars($data->surname, ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($data->email, ENT_QUOTES, 'UTF-8');
+    $people = htmlspecialchars($data->people, ENT_QUOTES, 'UTF-8');
+    $allergies = htmlspecialchars($data->allergies, ENT_QUOTES, 'UTF-8');
+    $date = htmlspecialchars($data->date, ENT_QUOTES, 'UTF-8');
+    $time = htmlspecialchars($data->time, ENT_QUOTES, 'UTF-8');
+    
 
 
     // Get the maximum number of people allowed per reservation from the database
