@@ -23,10 +23,6 @@ try {
     $date = $_POST['date'];
     $time = $_POST['time'];
 
-
-    // Convert date format from "d/m/Y" to "Y-m-d"
-    $dateTime = DateTime::createFromFormat('d/m/Y', $date);
-    $date = $dateTime->format('Y-m-d');
     // Get today's date
     $today = new DateTime($date);
 
