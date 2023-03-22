@@ -15,13 +15,13 @@ try {
     $_POST = json_decode($input, true);
 
     // Sanitize input variables to prevent SQL injection
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-    $people = $_POST['people'];
-    $allergies = $_POST['allergies'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
+    $name = isset($_POST['name']) ? $_POST['name'] : null;
+    $surname = isset($_POST['surname']) ? $_POST['surname'] : null;
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
+    $people = isset($_POST['people']) ? $_POST['people'] : null;
+    $allergies = isset($_POST['allergies']) ? $_POST['allergies'] : null;
+    $date = isset($_POST['date']) ? $_POST['date'] : null;
+    $time = isset($_POST['time']) ? $_POST['time'] : null;
 
 
     // Get the maximum number of people allowed per reservation from the database
