@@ -12,17 +12,16 @@ try {
     require_once 'dbConnect.php';
 
     // Get the request payload and decode it as JSON
-    $input = file_get_contents('php://input');
-    $_POST = json_decode($input, true);
+    $data = json_decode(file_get_contents("php://input"));
 
     // Sanitize the input values before binding them to the SQL statement
-    $name = $_POST['name'];
-    $surname = $_POST['surname'];
-    $email = $_POST['email'];
-    $people = $_POST['people'];
-    $allergies = $_POST['allergies'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
+    $name = htmlspecialchars($data->name, ENT_QUOTES, 'UTF-8');
+    $surname = htmlspecialchars($data->surname, ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($data->email, ENT_QUOTES, 'UTF-8');
+    $people = htmlspecialchars($data->people, ENT_QUOTES, 'UTF-8');
+    $allergies = htmlspecialchars($data->allergies, ENT_QUOTES, 'UTF-8');
+    $date = htmlspecialchars($data->date, ENT_QUOTES, 'UTF-8');
+    $time = htmlspecialchars($data->time, ENT_QUOTES, 'UTF-8');
 
 
         // Prepare a SQL statement to insert a new booking into the database
