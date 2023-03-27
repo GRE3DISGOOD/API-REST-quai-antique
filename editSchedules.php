@@ -1,5 +1,5 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://gaetan-hts.github.io/quai-antique/#/');
 header('Access-Control-Allow-Methods: POST, PUT');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');

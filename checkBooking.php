@@ -1,7 +1,7 @@
 <?php
 
 // Set response headers to allow cross-origin requests and specify content type
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://gaetan-hts.github.io/quai-antique/#/");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header('Content-Type: application/json');
