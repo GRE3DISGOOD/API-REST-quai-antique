@@ -20,8 +20,8 @@ try {
     $email = htmlspecialchars($data->email, ENT_QUOTES, 'UTF-8');
     $people = htmlspecialchars($data->people, ENT_QUOTES, 'UTF-8');
     $allergies = htmlspecialchars($data->allergies, ENT_QUOTES, 'UTF-8');
-    $date = htmlspecialchars($data->date, ENT_QUOTES, 'UTF-8');
-    $time = htmlspecialchars($data->time, ENT_QUOTES, 'UTF-8');
+    $date = $data->date;
+    $time = $data->time;
 
 
         // Prepare a SQL statement to insert a new booking into the database
