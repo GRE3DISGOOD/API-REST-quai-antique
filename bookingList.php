@@ -20,21 +20,21 @@ try {
     $email = htmlspecialchars($data->email, ENT_QUOTES, 'UTF-8');
     $people = htmlspecialchars($data->people, ENT_QUOTES, 'UTF-8');
     $allergies = htmlspecialchars($data->allergies, ENT_QUOTES, 'UTF-8');
-    $date = $data->date;
-    $time = $data->time;
+    $date = htmlspecialchars($data->date, ENT_QUOTES, 'UTF-8');
+    $time = htmlspecialchars($data->time, ENT_QUOTES, 'UTF-8');
 
-
+    
         // Prepare a SQL statement to insert a new booking into the database
         $stmt = $pdo->prepare("INSERT INTO bookinglist (name, surname, email, people, allergies, date, time) VALUES (:name, :surname, :email, :people, :allergies, :date, :time)");
-
+        
         // Bind the values from the request to the placeholders in the SQL statement
-        $stmt->bindParam(':name', $_POST['name']);
-        $stmt->bindParam(':surname', $_POST['surname']);
-        $stmt->bindParam(':email', $_POST['email']);
-        $stmt->bindParam(':people', $_POST['people']);
-        $stmt->bindParam(':allergies', $_POST['allergies']);
-        $stmt->bindParam(':date', $_POST['date']);
-        $stmt->bindParam(':time', $_POST['time']);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':surname', $surname);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':people', $people);
+        $stmt->bindParam(':allergies', $allergies);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':time', $time);
 
         // Execute the SQL statement and return a response indicating success or failure
         if ($stmt->execute()) {
