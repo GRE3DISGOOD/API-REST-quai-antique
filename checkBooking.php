@@ -77,8 +77,19 @@ try {
         );
         echo json_encode($response);
         
-    } else {
+    }
+    
+    // Check if the number of lunch or dinner reservations is greater than the maximum number of people allowed
+    if ($result['lunchPeople'] > $maxPeople || $result['dinnerPeople'] > $maxPeople) {
         echo json_encode(array("booked ?" => false));
+    } else {
+        // Construct the response array
+        $response = array(
+            'lunchPeople' => ($result['lunchPeople'] <= $maxPeople),
+            'dinnerPeople' => ($result['dinnerPeople'] <= $maxPeople),
+            'date' => $date
+        );
+        echo json_encode($response);
     }
 } catch (PDOException $e) {
     // If there is an error connecting to the database, return an error message
