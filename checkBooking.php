@@ -13,8 +13,6 @@ try {
     // Retrieve POST data and decode it as JSON
     $data = json_decode(file_get_contents("php://input"));
 
-    echo json_encode($data);
-
     // Sanitize input variables to prevent SQL injection
     $name = htmlspecialchars($data->name, ENT_QUOTES, 'UTF-8');
     $surname = htmlspecialchars($data->surname, ENT_QUOTES, 'UTF-8');
