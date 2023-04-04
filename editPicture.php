@@ -1,7 +1,7 @@
 <?php
 
 // Set response headers
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: https://gaetan-hts.github.io");
 header('Access-Control-Allow-Methods: POST, PUT');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');

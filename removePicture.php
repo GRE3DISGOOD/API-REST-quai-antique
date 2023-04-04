@@ -1,7 +1,7 @@
 <?php
 
 // Set CORS headers and content type
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: https://gaetan-hts.github.io");
 header('Access-Control-Allow-Methods: POST, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
