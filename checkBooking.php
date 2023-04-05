@@ -50,7 +50,7 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         // If the number of lunch reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
-        if (($result['lunchPeople'] + $people) > $result['maxPeople']) {
+        if (($result['lunchPeople'] + $people) >= $result['maxPeople']) {
             // Set lunchPeople to maxPeople to close the day for lunch reservations
             $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = :maxPeople WHERE date = :date');
             $stmt->bindParam(':maxPeople', $result['maxPeople'], PDO::PARAM_INT);
@@ -87,7 +87,7 @@ try {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         // If the number of dinner reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
-        if (($result['dinnerPeople'] + $people) > $result['maxPeople']) {
+        if (($result['dinnerPeople'] + $people) >= $result['maxPeople']) {
             // Set dinnerPeople to maxPeople to close the day for dinner reservations
             $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = :maxPeople WHERE date = :date');
             $stmt->bindParam(':maxPeople', $result['maxPeople'], PDO::PARAM_INT);
