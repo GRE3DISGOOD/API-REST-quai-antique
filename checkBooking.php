@@ -70,8 +70,7 @@ try {
             // Construct the response array
             $response = array(
                 'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-                'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
-                'date' => $date
+                'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
             );
             echo json_encode($response);
         }
@@ -103,8 +102,7 @@ try {
     // Construct the response array
     $response = array(
     'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
-    'date' => $date
+    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
     );
     
     // Check if the number of lunch or dinner reservations exceeds the maximum number of people allowed
