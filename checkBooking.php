@@ -72,7 +72,7 @@ try {
             );
             echo json_encode($response);
         }
-    } else ($time >= '19:00' && $time <= '21:00') {
+    } elseif ($time >= '19:00' && $time <= '21:00') {
         // Retrieve current number of dinner reservations and maximum number of people allowed
         $stmt = $pdo->prepare('SELECT dinnerPeople, maxPeople FROM calendar WHERE date = :date');
         $stmt->bindParam(':date', $date, PDO::PARAM_STR);
