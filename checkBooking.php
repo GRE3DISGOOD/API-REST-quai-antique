@@ -13,8 +13,6 @@ try {
     // Retrieve POST data and decode it as JSON
     $data = json_decode(file_get_contents("php://input"));
 
-    echo json_encode($data);
-
     // Sanitize input variables to prevent SQL injection
     $name = htmlspecialchars($data->name, ENT_QUOTES, 'UTF-8');
     $surname = htmlspecialchars($data->surname, ENT_QUOTES, 'UTF-8');
@@ -74,7 +72,7 @@ try {
             );
             echo json_encode($response);
         }
-    } elseif ($time >= '19:00' && $time <= '21:00') {
+    } else ($time >= '19:00' && $time <= '21:00') {
         // Retrieve current number of dinner reservations and maximum number of people allowed
         $stmt = $pdo->prepare('SELECT dinnerPeople, maxPeople FROM calendar WHERE date = :date');
         $stmt->bindParam(':date', $date, PDO::PARAM_STR);
