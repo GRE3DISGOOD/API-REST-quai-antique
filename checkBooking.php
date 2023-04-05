@@ -96,13 +96,13 @@ try {
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 
         }
+        // Construct the response array
+        $response = array(
+        'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
+        'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
+        'booked' => true
+        );
     }       
-    // Construct the response array
-    $response = array(
-    'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
-    'booked' => true
-    );
     
     // Check if the number of lunch or dinner reservations exceeds the maximum number of people allowed
     if ($time >= '12:00' && $time <= '14:00') {
