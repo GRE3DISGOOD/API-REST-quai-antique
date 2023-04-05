@@ -68,7 +68,8 @@ try {
             // Construct the response array
             $response = array(
                 'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-                'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
+                'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
+                'booked' => true
             );
         }
     } elseif ($time >= '19:00' && $time <= '21:00') {
@@ -99,7 +100,8 @@ try {
     // Construct the response array
     $response = array(
     'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
+    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
+    'booked' => true
     );
     
     // Check if the number of lunch or dinner reservations exceeds the maximum number of people allowed
