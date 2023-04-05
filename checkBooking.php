@@ -13,6 +13,8 @@ try {
     // Retrieve POST data and decode it as JSON
     $data = json_decode(file_get_contents("php://input"));
 
+    echo json_encode($data);
+
     // Sanitize input variables to prevent SQL injection
     $name = htmlspecialchars($data->name, ENT_QUOTES, 'UTF-8');
     $surname = htmlspecialchars($data->surname, ENT_QUOTES, 'UTF-8');
@@ -43,54 +45,84 @@ try {
     }
     // If the time is between 12:00 and 14:00, update the number of people for lunch
     if ($time >= '12:00' && $time <= '14:00') {
-        $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = lunchPeople + :people WHERE date = :date');
-        $stmt->bindParam(':people', $people, PDO::PARAM_INT);
-        $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-        $stmt->execute();
-         // Retrieve updated number of lunch and dinner reservations and maximum number of people allowed
-        $stmt = $pdo->prepare('SELECT lunchPeople, dinnerPeople, maxPeople FROM calendar WHERE date = :date');
+        // Retrieve current number of lunch reservations and maximum number of people allowed
+        $stmt = $pdo->prepare('SELECT lunchPeople, maxPeople FROM calendar WHERE date = :date');
         $stmt->bindParam(':date', $date, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        // Construct the response array
-        $response = array(
-            'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-            'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
-            'date' => $date
-        );
-        echo json_encode($response);
-    // If the time is between 19:00 and 21:00, update the number of people for dinner
+    
+        // If the number of lunch reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
+        if (($result['lunchPeople'] + $people) > $result['maxPeople']) {
+            echo json_encode(array("booked ?" => false));
+        } else {
+            // Update the number of people for lunch
+            $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = lunchPeople + :people WHERE date = :date');
+            $stmt->bindParam(':people', $people, PDO::PARAM_INT);
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            // Retrieve updated number of lunch and dinner reservations and maximum number of people allowed
+            $stmt = $pdo->prepare('SELECT lunchPeople, dinnerPeople, maxPeople FROM calendar WHERE date = :date');
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Construct the response array
+            $response = array(
+                'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
+                'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
+                'date' => $date
+            );
+            echo json_encode($response);
+        }
     } elseif ($time >= '19:00' && $time <= '21:00') {
-        $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = dinnerPeople + :people WHERE date = :date');
-        $stmt->bindParam(':people', $people, PDO::PARAM_INT);
-        $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-        $stmt->execute();
-        // Retrieve updated number of lunch and dinner reservations and maximum number of people allowed
-        $stmt = $pdo->prepare('SELECT dinnerPeople, lunchPeople, maxPeople FROM calendar WHERE date = :date');
+        // Retrieve current number of dinner reservations and maximum number of people allowed
+        $stmt = $pdo->prepare('SELECT dinnerPeople, maxPeople FROM calendar WHERE date = :date');
         $stmt->bindParam(':date', $date, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        // Construct the response array
-        $response = array(
-            'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
-            'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
-        );
-        echo json_encode($response);
-        
+    
+        // If the number of dinner reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
+        if (($result['dinnerPeople'] + $people) > $result['maxPeople']) {
+            echo json_encode(array("booked ?" => false));
+        } else {
+            // Update the number of people for dinner
+            $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = dinnerPeople + :people WHERE date = :date');
+            $stmt->bindParam(':people', $people, PDO::PARAM_INT);
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            // Retrieve updated number of lunch and dinner reservations and maximum number of people allowed
+            $stmt = $pdo->prepare('SELECT dinnerPeople, lunchPeople, maxPeople FROM calendar WHERE date = :date');
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+        }
+    }       
+    // Construct the response array
+    $response = array(
+    'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
+    'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople']),
+    'date' => $date
+    );
+    
+    // Check if the number of lunch or dinner reservations exceeds the maximum number of people allowed
+    if ($time >= '12:00' && $time <= '14:00') {
+        if ($result['lunchPeople'] > $result['maxPeople']) {
+        echo json_encode(array("booked" => false));
+        return;
+        }
+    } elseif ($time >= '19:00' && $time <= '21:00') {
+        if ($result['dinnerPeople'] > $result['maxPeople']) {
+        echo json_encode(array("booked" => false));
+        return;
+        }
     }
     
-    // Check if the number of lunch or dinner reservations is greater than the maximum number of people allowed
-    if ($result['lunchPeople'] > $maxPeople || $result['dinnerPeople'] > $maxPeople) {
-        echo json_encode(array("booked ?" => false));
-    } else {
-        // Construct the response array
-        $response = array(
-            'lunchPeople' => ($result['lunchPeople'] <= $maxPeople),
-            'dinnerPeople' => ($result['dinnerPeople'] <= $maxPeople),
-            'date' => $date
-        );
-        echo json_encode($response);
-    }
+    // Output the response as JSON
+    echo json_encode($response);
+
 } catch (PDOException $e) {
     // If there is an error connecting to the database, return an error message
     echo 'Error: ' . $e->getMessage();
