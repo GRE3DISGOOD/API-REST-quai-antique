@@ -70,7 +70,6 @@ try {
                 'lunchPeople' => ($result['lunchPeople'] <= $result['maxPeople']),
                 'dinnerPeople' => ($result['dinnerPeople'] <= $result['maxPeople'])
             );
-            echo json_encode($response);
         }
     } elseif ($time >= '19:00' && $time <= '21:00') {
         // Retrieve current number of dinner reservations and maximum number of people allowed
@@ -106,13 +105,15 @@ try {
     // Check if the number of lunch or dinner reservations exceeds the maximum number of people allowed
     if ($time >= '12:00' && $time <= '14:00') {
         if ($result['lunchPeople'] > $result['maxPeople']) {
-        echo json_encode(array("booked" => false));
-        return;
+            $response['booked'] = false;
+            echo json_encode($response);
+            return;
         }
     } elseif ($time >= '19:00' && $time <= '21:00') {
         if ($result['dinnerPeople'] > $result['maxPeople']) {
-        echo json_encode(array("booked" => false));
-        return;
+            $response['booked'] = false;
+            echo json_encode($response);
+            return;
         }
     }
     
