@@ -51,7 +51,14 @@ try {
     
         // If the number of lunch reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
         if (($result['lunchPeople'] + $people) > $result['maxPeople']) {
-            $response = array("booked" => false);
+            // Set lunchPeople to maxPeople to close the day for lunch reservations
+            $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = :maxPeople WHERE date = :date');
+            $stmt->bindParam(':maxPeople', $result['maxPeople'], PDO::PARAM_INT);
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+
+            // Construct the response array
+            $response = array("booked" => false, "lunchPeople" => false, "dinnerPeople" => ($result['dinnerPeople'] <= $result['maxPeople']));
         } else {
             // Update the number of people for lunch
             $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = lunchPeople + :people WHERE date = :date');
@@ -81,7 +88,14 @@ try {
     
         // If the number of dinner reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
         if (($result['dinnerPeople'] + $people) > $result['maxPeople']) {
-            $response = array("booked" => false);
+            // Set dinnerPeople to maxPeople to close the day for dinner reservations
+            $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = :maxPeople WHERE date = :date');
+            $stmt->bindParam(':maxPeople', $result['maxPeople'], PDO::PARAM_INT);
+            $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+            $stmt->execute();
+        
+            // Construct the response array
+            $response = array("booked" => false, "lunchPeople" => ($result['lunchPeople'] <= $result['maxPeople']), "dinnerPeople" => false);
         } else {
             // Update the number of people for dinner
             $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = dinnerPeople + :people WHERE date = :date');
