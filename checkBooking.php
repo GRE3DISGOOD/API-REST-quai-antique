@@ -53,7 +53,7 @@ try {
     
         // If the number of lunch reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
         if (($result['lunchPeople'] + $people) > $result['maxPeople']) {
-            echo json_encode(array("booked ?" => false));
+            echo json_encode(array("booked" => false));
         } else {
             // Update the number of people for lunch
             $stmt = $pdo->prepare('UPDATE calendar SET lunchPeople = lunchPeople + :people WHERE date = :date');
@@ -84,7 +84,7 @@ try {
     
         // If the number of dinner reservations plus the new reservation is greater than the maximum number of people allowed, return 'booked ?' => false
         if (($result['dinnerPeople'] + $people) > $result['maxPeople']) {
-            echo json_encode(array("booked ?" => false));
+            echo json_encode(array("booked" => false));
         } else {
             // Update the number of people for dinner
             $stmt = $pdo->prepare('UPDATE calendar SET dinnerPeople = dinnerPeople + :people WHERE date = :date');
