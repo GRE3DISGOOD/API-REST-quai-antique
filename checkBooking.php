@@ -38,8 +38,13 @@ try {
     if (!$result) {
           $lunchPeople = 0;
           $dinnerPeople = 0;
-          $sql = "INSERT INTO calendar (date, lunchPeople, dinnerPeople, maxPeople) VALUES ('$date', '$lunchPeople', '$dinnerPeople', '$maxPeople')";
-          $pdo->exec($sql);
+          $sql = "INSERT INTO calendar (date, lunchPeople, dinnerPeople, maxPeople) VALUES (:date, :lunchPeople, :dinnerPeople, :maxPeople)";
+          $stmt = $pdo->prepare($sql);
+          $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+          $stmt->bindParam(':lunchPeople', $lunchPeople, PDO::PARAM_INT);
+          $stmt->bindParam(':dinnerPeople', $dinnerPeople, PDO::PARAM_INT);
+          $stmt->bindParam(':maxPeople', $maxPeople, PDO::PARAM_INT);
+          $stmt->execute();
     }
     // If the time is between 12:00 and 14:00, update the number of people for lunch
     if ($time >= '12:00' && $time <= '14:00') {
